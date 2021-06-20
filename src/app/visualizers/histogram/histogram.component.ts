@@ -15,8 +15,8 @@ import {
   styleUrls: ['./histogram.component.scss'],
 })
 export class HistogramComponent implements OnInit, OnDestroy {
-  readonly HEIGHT = 50;
-  readonly WIDTH = 20;
+  @Input() height: number = 80;
+  @Input() width: number = 20;
   @Input() analyser: AnalyserNode | undefined = undefined;
   private drawLoopId: number = 0;
   private canvas: CanvasRenderingContext2D | null = null;
@@ -43,26 +43,25 @@ export class HistogramComponent implements OnInit, OnDestroy {
   draw() {
     this.drawLoopId = requestAnimationFrame(this.draw.bind(this));
     if (this.canvas) {
-      this.canvas.clearRect(0, 0, this.WIDTH, this.HEIGHT);
+      this.canvas.clearRect(0, 0, this.width, this.height);
       if (this.analyser && this.dataArray) {
         this.analyser.getByteFrequencyData(this.dataArray);
         let barHeight = 0;
         // take every 8th freq of for eight times
         for (let i = 0; i < 64; i = i + 8) {
-          barHeight = this.dataArray[i] / 2;
-
-          this.canvas.fillStyle = 'rgba(0,0,0, .2)';
+          barHeight = this.dataArray[i] / 1.5;
+          this.canvas.fillStyle = 'rgba(0, 0, 0, .2)';
           this.canvas.fillRect(
             0,
-            this.HEIGHT - barHeight / 2,
-            this.WIDTH,
+            this.height - barHeight / 2,
+            this.width,
             barHeight
           );
         }
         this.canvas.fillRect(
           0,
-          this.HEIGHT - barHeight / 2,
-          this.WIDTH,
+          this.height - barHeight / 2,
+          this.width,
           barHeight
         );
       }
