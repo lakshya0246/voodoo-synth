@@ -1,4 +1,11 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
 import { clampInteger } from '../controls.helpers';
@@ -9,9 +16,12 @@ import { clampInteger } from '../controls.helpers';
 export class TurnKnobDirective {
   counter: number = 0;
   private prevMouseYPos: number = 0;
-  private percent: number = 0;
+  private percent: number = -100;
   private readonly DRAG_THRESHOLD: number = 200;
+  private readonly MAX_ANGLE: number = 140;
   private mouseMoveSubscription: Subscription | undefined = undefined;
+  @Input() track: HTMLOrSVGElement | null = null;
+
   constructor(private el: ElementRef<HTMLDivElement>) {}
 
   onMouseMove(e: MouseEvent) {
@@ -23,8 +33,20 @@ export class TurnKnobDirective {
 
     this.prevMouseYPos = e.clientY;
     this.percent = clamped;
-    this.el.nativeElement.style.transform = `rotate(${clamped}deg)`;
-    this.el.nativeElement.innerText = this.percent.toString();
+    this.el.nativeElement.style.transform = `rotate(${
+      (clamped / 100) * this.MAX_ANGLE
+    }deg)`;
+    if (this.track) {
+      const track = this.track as SVGElement;
+      const path = track.children[1] as SVGCircleElement;
+      // subtract arc from circle
+      const circumference = 3.14 * 38 * 2 - ((3.14 * 38 * 2) / 360) * 80;
+      path.style.strokeDasharray = `${circumference} ${circumference}`;
+      path.style.strokeDashoffset = (
+        ((-clamped / 2 + 50) / 100) *
+        circumference
+      ).toString();
+    }
   }
 
   @HostListener('mousedown', ['$event'])

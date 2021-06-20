@@ -7,11 +7,27 @@
     border-radius: 50px;
     cursor: grab;
     transition: transform 50ms;
+    transform: rotate(-100deg);
 
     &::after {
         content: "0";
         position: absolute;
-        right: 0;
-        bottom: 0;
+        left: 22px;
+        top: 0;
+    }
+}
+
+svg.track {
+    transform: rotate(-230deg);
+    transform-origin: center;
+}
+
+:host {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .control {
+        position: absolute;
     }
 }

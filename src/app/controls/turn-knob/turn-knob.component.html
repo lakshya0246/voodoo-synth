@@ -1,1 +1,8 @@
-<div class="control" vdTurnKnob></div>
+<svg class='track' #trackEl width="84" height="84" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle stroke-dasharray="" stroke-width="4" stroke="gainsboro" fill="transparent" r="38" cx="42" cy="42" />
+    <circle stroke-dasharray="" stroke-width="4" stroke="hotpink" fill="transparent" r="38" cx="42" cy="42" />
+    <circle stroke-dasharray="" stroke-width="6" stroke-dasharray="185.609, 185.609" stroke-dashoffset="185.609"
+        stroke="white" fill="transparent" r="38" cx="42" cy="42" />
+</svg>
+
+<div class="control" vdTurnKnob [track]="trackEl"></div>
