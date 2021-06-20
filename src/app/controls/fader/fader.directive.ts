@@ -4,27 +4,33 @@ import { throttleTime } from 'rxjs/operators';
 import { clampInteger } from '../controls.helpers';
 
 @Directive({
-  selector: '[vdTurnKnob]',
+  selector: '[vdFader]',
 })
-export class TurnKnobDirective {
+export class FaderDirective {
   counter: number = 0;
   private prevMouseYPos: number = 0;
-  private percent: number = 0;
-  private readonly DRAG_THRESHOLD: number = 200;
+  private yPosition: number = 0;
+  private readonly TRACK_THRESHOLD: number = 400;
   private mouseMoveSubscription: Subscription | undefined = undefined;
   constructor(private el: ElementRef<HTMLDivElement>) {}
 
   onMouseMove(e: MouseEvent) {
-    const deltaPercent =
-      (clampInteger(e.clientY - this.prevMouseYPos, this.DRAG_THRESHOLD) /
-        this.DRAG_THRESHOLD) *
-      100;
-    const clamped = clampInteger(this.percent + deltaPercent, 100);
+    const deltaPosition = clampInteger(
+      e.clientY - this.prevMouseYPos,
+      this.TRACK_THRESHOLD
+    );
+    const clamped = clampInteger(
+      this.yPosition + deltaPosition,
+      this.TRACK_THRESHOLD
+    );
 
     this.prevMouseYPos = e.clientY;
-    this.percent = clamped;
-    this.el.nativeElement.style.transform = `rotate(${clamped}deg)`;
-    this.el.nativeElement.innerText = this.percent.toString();
+    this.yPosition = clamped;
+    this.el.nativeElement.style.transform = `translateY(${clamped}%)`;
+    this.el.nativeElement.innerText = (
+      (this.yPosition / this.TRACK_THRESHOLD) *
+      100
+    ).toString();
   }
 
   @HostListener('mousedown', ['$event'])
