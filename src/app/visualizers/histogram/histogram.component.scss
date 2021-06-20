@@ -1,0 +1,11 @@
+:host {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: 50px;
+    background: ghostwhite;
+
+    canvas {
+        height: 100%;
+    }
+}

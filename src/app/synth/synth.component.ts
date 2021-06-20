@@ -7,9 +7,11 @@ import { KEY_NOTE_FREQUENCY_MAP } from './notes';
   styleUrls: ['./synth.component.scss'],
 })
 export class SynthComponent {
+  values = [12, 6];
   private audioContext = new AudioContext();
   private gain = this.audioContext.createGain();
   playing: boolean = false;
+  analyserNode: AnalyserNode = this.audioContext.createAnalyser();
   private interval: any;
   noteSequence = [
     'a',
@@ -92,7 +94,10 @@ export class SynthComponent {
     const oscillator = this.audioContext.createOscillator();
     oscillator.frequency.value = frequency;
     oscillator.type = 'triangle';
-    oscillator.connect(this.gain).connect(this.audioContext.destination);
+    oscillator
+      .connect(this.gain)
+      .connect(this.analyserNode)
+      .connect(this.audioContext.destination);
     oscillator.start(0);
     this.stop(1.5);
   }

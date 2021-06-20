@@ -4,4 +4,9 @@
     justify-content: center;
     height: 50vh;
     overflow: hidden;
+    flex-direction: column;
+
+    & > * {
+        margin-bottom: 24px;
+    }
 }
