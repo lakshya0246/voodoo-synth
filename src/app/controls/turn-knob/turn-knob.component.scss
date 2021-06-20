@@ -1,20 +1,65 @@
 .control {
-    height: 48px;
-    width: 48px;
+    --knob-size: 80px;
+    position: relative;
     user-select: none;
-    background: orange;
     position: relative;
     border-radius: 50px;
     cursor: grab;
     transition: transform 50ms;
-    transform: rotate(-100deg);
 
-    &::after {
-        content: "0";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(var(--knob-size) - 4px);
+    width: calc(var(--knob-size) - 4px);
+
+    & > img:first-child {
+        transform: rotate(-140deg);
+        display: block;
+        height: var(--knob-size);
+        width: var(--knob-size);
         position: absolute;
-        left: 22px;
-        top: 0;
+        transform-origin: center;
     }
+    & > img:nth-child(2) {
+        display: block;
+        height: calc(var(--knob-size) - 12px);
+        width: calc(var(--knob-size) - 12px);
+        position: absolute;
+        border-radius: 50%;
+        box-shadow: 0px 0.5px 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    .control-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(-140deg);
+        position: relative;
+        border-radius: 50%;
+        height: var(--knob-size);
+        width: var(--knob-size);
+        transform-origin: center;
+        &::after {
+            content: "";
+            position: absolute;
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.22) inset;
+            background: var(--primary);
+            height: 10px;
+            width: 10px;
+            border-radius: 50px;
+            top: 8px;
+            z-index: 20;
+        }
+    }
+}
+
+.turn-knob-shadow-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0px 24px 24px rgba(0, 0, 0, 0.25), 0px 12px 8px rgba(0, 0, 0, 0.3);
 }
 
 svg.track {
@@ -23,11 +68,12 @@ svg.track {
 }
 
 :host {
+    background: white;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    .control {
+    .turn-knob-shadow-container {
         position: absolute;
     }
 }

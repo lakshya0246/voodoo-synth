@@ -33,14 +33,18 @@ export class TurnKnobDirective {
 
     this.prevMouseYPos = e.clientY;
     this.percent = clamped;
-    this.el.nativeElement.style.transform = `rotate(${
-      (clamped / 100) * this.MAX_ANGLE
-    }deg)`;
+    (
+      this.el.nativeElement.children[0] as HTMLElement
+    ).style.transform = `rotate(${(clamped / 100) * this.MAX_ANGLE}deg)`;
+    this.percent = clamped;
+    (
+      this.el.nativeElement.children[2] as HTMLElement
+    ).style.transform = `rotate(${(clamped / 100) * this.MAX_ANGLE}deg)`;
     if (this.track) {
       const track = this.track as SVGElement;
       const path = track.children[1] as SVGCircleElement;
       // subtract arc from circle
-      const circumference = 3.14 * 38 * 2 - ((3.14 * 38 * 2) / 360) * 80;
+      const circumference = 3.14 * 56 * 2 - ((3.14 * 56 * 2) / 360) * 80;
       path.style.strokeDasharray = `${circumference} ${circumference}`;
       path.style.strokeDashoffset = (
         ((-clamped / 2 + 50) / 100) *
