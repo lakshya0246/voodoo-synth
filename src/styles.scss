@@ -1,2 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./colors.scss";
+
+@font-face {
+    font-family: "Press Start 2P";
+    font-weight: 400;
+    src: url(./assets/fonts/PressStart2P-Regular.ttf);
+}

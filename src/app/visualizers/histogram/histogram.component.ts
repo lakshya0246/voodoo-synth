@@ -50,7 +50,7 @@ export class HistogramComponent implements OnInit, OnDestroy {
         // take every 8th freq of for eight times
         for (let i = 0; i < 64; i = i + 8) {
           barHeight = this.dataArray[i] / 1.5;
-          this.canvas.fillStyle = 'rgba(0, 0, 0, .2)';
+          this.canvas.fillStyle = 'rgba(26, 143, 176, .2)';
           this.canvas.fillRect(
             0,
             this.height - barHeight / 2,

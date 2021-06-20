@@ -5,9 +5,39 @@
 }
 
 .display {
+    --padding: 16px;
+    padding: var(--padding);
+    position: relative;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 36px 1fr;
+    gap: 12px;
     background: var(--display-bg);
     width: 100%;
     height: 100%;
+    box-shadow: -1px -1px 0px 0px rgba(255, 255, 255, 1) inset, inset 1px 1px 1px rgba(0, 0, 0, 0.25),
+        1px 1px 4px 0px rgba(61, 46, 46, 0.25) inset;
+    border-radius: 4px;
+
+    p {
+        font-size: 24px;
+        line-height: 24px;
+        letter-spacing: 1px;
+        font-family: "Press Start 2P", sans-serif;
+        margin: 0;
+        color: var(--primary);
+        justify-self: flex-end;
+        align-self: center;
+        text-align: right;
+    }
+
+    .lattice-filter {
+        position: absolute;
+        top: var(--padding);
+        left: var(--padding);
+        height: calc(100% - var(--padding) * 2);
+        width: 36px;
+        background-image: linear-gradient(90deg, transparent 50%, var(--display-bg) 50%),
+            linear-gradient(0deg, transparent 50%, var(--display-bg) 50%);
+        background-size: 4px 4px;
+    }
 }
