@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { KEY_NOTE_FREQUENCY_MAP } from './notes';
 
 @Component({
-  selector: 'app-synth',
+  selector: 'vd-synth',
   templateUrl: './synth.component.html',
   styleUrls: ['./synth.component.scss'],
 })
@@ -72,10 +72,9 @@ export class SynthComponent {
     'e',
     'j',
   ];
+  noteSequence2 = ['k', 'j', 's', 'a'];
 
-  constructor() {
-    this.playNoteSequence(this.noteSequence);
-  }
+  constructor() {}
 
   play() {
     this.gain = this.audioContext.createGain();
@@ -89,9 +88,10 @@ export class SynthComponent {
 
   playNote(frequency = 440.0) {
     this.gain = this.audioContext.createGain();
+    this.gain.gain.value = 0.5;
     const oscillator = this.audioContext.createOscillator();
     oscillator.frequency.value = frequency;
-    oscillator.type = 'sine';
+    oscillator.type = 'triangle';
     oscillator.connect(this.gain).connect(this.audioContext.destination);
     oscillator.start(0);
     this.stop(1.5);
@@ -125,7 +125,12 @@ export class SynthComponent {
 
   @HostListener('document:keyup', ['$event'])
   onPress(event: KeyboardEvent) {
+    if (event.code === 'Space') {
+      this.playNoteSequence(this.noteSequence);
+      this.playNoteSequence(this.noteSequence2);
+    }
     const keyNoteFrequency = KEY_NOTE_FREQUENCY_MAP[event.key];
+
     if (keyNoteFrequency) {
       this.playNote(keyNoteFrequency);
     }

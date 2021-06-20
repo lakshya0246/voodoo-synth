@@ -1,0 +1,17 @@
+.control {
+    height: 48px;
+    width: 48px;
+    user-select: none;
+    background: orange;
+    position: relative;
+    border-radius: 50px;
+    cursor: grab;
+    transition: transform 50ms;
+
+    &::after {
+        content: "0";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+}
