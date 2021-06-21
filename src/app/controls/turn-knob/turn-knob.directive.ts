@@ -44,7 +44,7 @@ export class TurnKnobDirective {
       const track = this.track as SVGElement;
       const path = track.children[1] as SVGCircleElement;
       // subtract arc from circle
-      const circumference = 3.14 * 56 * 2 - ((3.14 * 56 * 2) / 360) * 80;
+      const circumference = 3.14 * 62 * 2 - ((3.14 * 62 * 2) / 360) * 80;
       path.style.strokeDasharray = `${circumference} ${circumference}`;
       path.style.strokeDashoffset = (
         ((-clamped / 2 + 50) / 100) *
