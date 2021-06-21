@@ -13,7 +13,7 @@
     height: calc(var(--knob-size) - 4px);
     width: calc(var(--knob-size) - 4px);
 
-    & > img:first-child {
+    & > svg.base {
         transform: rotate(-140deg);
         display: block;
         height: var(--knob-size);
@@ -48,8 +48,21 @@
             height: 10px;
             width: 10px;
             border-radius: 50px;
-            top: 8px;
+            top: 9px;
             z-index: 20;
+        }
+    }
+
+    &.small {
+        --knob-size: 60px;
+        svg.base {
+            circle {
+                stroke-dasharray: none;
+            }
+        }
+
+        .control-arrow::after {
+            top: 9px;
         }
     }
 }

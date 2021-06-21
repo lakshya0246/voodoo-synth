@@ -3,6 +3,7 @@ import {
   ElementRef,
   HostListener,
   Input,
+  OnInit,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -13,7 +14,7 @@ import { clampInteger } from '../controls.helpers';
 @Directive({
   selector: '[vdTurnKnob]',
 })
-export class TurnKnobDirective {
+export class TurnKnobDirective implements OnInit {
   counter: number = 0;
   private prevMouseYPos: number = 0;
   private percent: number = -100;
@@ -21,8 +22,15 @@ export class TurnKnobDirective {
   private readonly MAX_ANGLE: number = 140;
   private mouseMoveSubscription: Subscription | undefined = undefined;
   @Input() track: HTMLOrSVGElement | null = null;
-
+  @Input() isSmall: boolean = false;
+  radius = 62;
   constructor(private el: ElementRef<HTMLDivElement>) {}
+
+  ngOnInit(): void {
+    if (this.isSmall) {
+      this.radius = 47;
+    }
+  }
 
   onMouseMove(e: MouseEvent) {
     const deltaPercent =
@@ -43,8 +51,10 @@ export class TurnKnobDirective {
     if (this.track) {
       const track = this.track as SVGElement;
       const path = track.children[1] as SVGCircleElement;
+
       // subtract arc from circle
-      const circumference = 3.14 * 62 * 2 - ((3.14 * 62 * 2) / 360) * 80;
+      const circumference =
+        3.14 * this.radius * 2 - ((3.14 * this.radius * 2) / 360) * 80;
       path.style.strokeDasharray = `${circumference} ${circumference}`;
       path.style.strokeDashoffset = (
         ((-clamped / 2 + 50) / 100) *

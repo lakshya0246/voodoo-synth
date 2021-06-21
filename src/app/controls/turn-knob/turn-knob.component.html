@@ -1,13 +1,27 @@
-<svg class='track' #trackEl width="140" height="140" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg class='track' [ngStyle]="{'display': isSmall ? 'none' : 'block'}" #trackEl width="140" height="140" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
     <circle stroke-dasharray="" stroke-width="8" stroke="gainsboro" fill="transparent" r="62" cx="70" cy="70" />
     <circle stroke-dasharray="" stroke-width="8" stroke="currentColor" fill="transparent" r="62" cx="70" cy="70" />
     <circle stroke-dasharray="" stroke-width="10" stroke-dasharray="302.836, 302.836" stroke-dashoffset="302.836"
         stroke="white" fill="transparent" r="62" cx="70" cy="70" />
 </svg>
 
+<svg class='track' [ngStyle]="{'display': !isSmall ? 'none' : 'block'}" #trackElSmall width="110" height="110"
+    fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle stroke-dasharray="" stroke-width="8" stroke="gainsboro" fill="transparent" r="47" cx="55" cy="55" />
+    <circle stroke-dasharray="" stroke-width="8" stroke="currentColor" fill="transparent" r="47" cx="55" cy="55" />
+    <circle stroke-dasharray="" stroke-width="10" stroke-dasharray="229.569, 229.569" stroke-dashoffset="229.569"
+        stroke="white" fill="transparent" r="47" cx="55" cy="55" />
+</svg>
+
 <div class="turn-knob-shadow-container">
-    <div class="control" vdTurnKnob [track]="trackEl">
-        <img draggable="false" src="../../../assets/materials/turn-knob-base.svg" />
+    <div class="control" [ngClass]="{'small': isSmall}" vdTurnKnob [isSmall]="isSmall"
+        [track]="isSmall ? trackElSmall: trackEl">
+        <svg class="base" width="42" height="42" viewBox="0 0 42 42" fill="transparent"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="21" cy="21" r="18" fill="#C4C4C4" stroke="#C4C4C4" stroke-width='6' stroke-linecap="round"
+                stroke-linejoin="round" stroke-dasharray="4 4" />
+        </svg>
         <img draggable="false" src="../../../assets/materials/brushed_metal_circular.png" />
         <div class="control-arrow"></div>
     </div>

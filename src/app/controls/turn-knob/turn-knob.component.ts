@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'vd-turn-knob',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./turn-knob.component.scss'],
 })
 export class TurnKnobComponent implements OnInit {
+  @Input() isSmall: boolean = false;
   constructor() {}
 
   ngOnInit(): void {}
