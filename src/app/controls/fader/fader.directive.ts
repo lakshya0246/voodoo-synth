@@ -10,7 +10,7 @@ export class FaderDirective {
   counter: number = 0;
   private prevMouseYPos: number = 0;
   private yPosition: number = 0;
-  private readonly TRACK_THRESHOLD: number = 400;
+  private readonly TRACK_THRESHOLD: number = 120;
   private mouseMoveSubscription: Subscription | undefined = undefined;
   constructor(private el: ElementRef<HTMLDivElement>) {}
 
@@ -26,7 +26,7 @@ export class FaderDirective {
 
     this.prevMouseYPos = e.clientY;
     this.yPosition = clamped;
-    this.el.nativeElement.style.transform = `translateY(${clamped}%)`;
+    this.el.nativeElement.style.transform = `translateY(${clamped}px)`;
   }
 
   @HostListener('mousedown', ['$event'])
