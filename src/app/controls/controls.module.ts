@@ -5,6 +5,7 @@ import { TurnKnobDirective } from './turn-knob/turn-knob.directive';
 import { FaderComponent } from './fader/fader.component';
 import { FaderDirective } from './fader/fader.directive';
 import { TypographyModule } from 'app/typography/typography.module';
+import { TouchSelectComponent } from './touch-select/touch-select.component';
 
 @NgModule({
   declarations: [
@@ -12,8 +13,9 @@ import { TypographyModule } from 'app/typography/typography.module';
     TurnKnobDirective,
     FaderComponent,
     FaderDirective,
+    TouchSelectComponent,
   ],
   imports: [CommonModule],
-  exports: [TurnKnobComponent, FaderComponent],
+  exports: [TurnKnobComponent, FaderComponent, TouchSelectComponent],
 })
 export class ControlsModule {}

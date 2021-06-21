@@ -1,6 +1,10 @@
 <vd-display [config]="{trackName: 'Blue Moon', analyserNode:analyserNode}"></vd-display>
 <br />
 <div class="control-layout">
+
+    <div class="control-container">
+        <vd-touch-select (selectWave)="oscillatorType = $event"></vd-touch-select>
+    </div>
     <div class="control-container">
         <vd-control-label label="Volume"></vd-control-label>
         <vd-turn-knob></vd-turn-knob>

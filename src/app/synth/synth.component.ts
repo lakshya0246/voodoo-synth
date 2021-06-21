@@ -13,6 +13,7 @@ export class SynthComponent {
   playing: boolean = false;
   analyserNode: AnalyserNode = this.audioContext.createAnalyser();
   private interval: any;
+  oscillatorType: OscillatorType = 'sine';
   noteSequence = [
     'a',
     's',
@@ -93,7 +94,7 @@ export class SynthComponent {
     this.gain.gain.value = 0.5;
     const oscillator = this.audioContext.createOscillator();
     oscillator.frequency.value = frequency;
-    oscillator.type = 'triangle';
+    oscillator.type = this.oscillatorType;
     oscillator
       .connect(this.gain)
       .connect(this.analyserNode)
