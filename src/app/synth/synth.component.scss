@@ -51,6 +51,7 @@
 }
 
 .control-layout {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,6 +66,7 @@
 }
 
 .base-plate-border {
+    z-index: 0;
     position: absolute;
     height: calc(100% - 48px);
     margin: 0;
