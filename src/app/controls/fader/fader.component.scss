@@ -1,6 +1,7 @@
 .control {
     position: relative;
     transform-origin: 50% 30px;
+    transition: transform 50ms;
 
     svg {
         padding-top: 42px;
