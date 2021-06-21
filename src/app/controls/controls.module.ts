@@ -4,9 +4,15 @@ import { TurnKnobComponent } from './turn-knob/turn-knob.component';
 import { TurnKnobDirective } from './turn-knob/turn-knob.directive';
 import { FaderComponent } from './fader/fader.component';
 import { FaderDirective } from './fader/fader.directive';
+import { TypographyModule } from 'app/typography/typography.module';
 
 @NgModule({
-  declarations: [TurnKnobComponent, TurnKnobDirective, FaderComponent, FaderDirective],
+  declarations: [
+    TurnKnobComponent,
+    TurnKnobDirective,
+    FaderComponent,
+    FaderDirective,
+  ],
   imports: [CommonModule],
   exports: [TurnKnobComponent, FaderComponent],
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'vd-control-label',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./control-label.component.scss'],
 })
 export class ControlLabelComponent implements OnInit {
+  @Input() label: string = '';
+
   constructor() {}
 
   ngOnInit(): void {}

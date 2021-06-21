@@ -1,0 +1,25 @@
+:host {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+p {
+    position: relative;
+    font-size: 18px;
+    font-family: "Barlow", sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--highlight);
+    line-height: 120%;
+}
+
+.strip {
+    height: 8px;
+    width: calc(100% + 8px);
+    background: white;
+    position: absolute;
+    z-index: 0;
+    box-shadow: 1px 1px 0 rgba($color: #000000, $alpha: 0.05);
+}
