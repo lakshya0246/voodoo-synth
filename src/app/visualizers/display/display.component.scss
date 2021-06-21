@@ -1,11 +1,10 @@
 :host {
     display: flex;
     width: 280px;
-    height: 80px;
 }
 
 .display {
-    --padding: 16px;
+    --padding: 10px;
     padding: var(--padding);
     position: relative;
     display: grid;
