@@ -27,10 +27,6 @@ export class FaderDirective {
     this.prevMouseYPos = e.clientY;
     this.yPosition = clamped;
     this.el.nativeElement.style.transform = `translateY(${clamped}%)`;
-    this.el.nativeElement.innerText = (
-      (this.yPosition / this.TRACK_THRESHOLD) *
-      100
-    ).toString();
   }
 
   @HostListener('mousedown', ['$event'])
