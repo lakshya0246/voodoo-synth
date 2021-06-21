@@ -1,7 +1,14 @@
-<vd-display [config]="{trackName: 'Blue Moon', analyserNode:analyserNode}"></vd-display>
+<img class="base-plate-border" src="../../assets/materials/milled_border.svg" alt="">
 <br />
-<div class="control-layout">
+<div class="top-section">
+    <div class="model-name">
+        Voodoo
 
+        <p>v4000-S</p>
+    </div>
+    <vd-display [config]="{trackName: 'Blue Moon', analyserNode:analyserNode}"></vd-display>
+</div>
+<div class="control-layout">
     <div class="control-container">
         <vd-touch-select (selectWave)="oscillatorType = $event"></vd-touch-select>
     </div>
@@ -14,16 +21,7 @@
         <vd-turn-knob></vd-turn-knob>
     </div>
 </div>
-<div class="control-layout">
-    <div class="control-container">
-        <vd-control-label label="Volume"></vd-control-label>
-        <vd-turn-knob></vd-turn-knob>
-    </div>
-    <div class="control-container">
-        <vd-control-label label="Volume"></vd-control-label>
-        <vd-turn-knob [isSmall]="true"></vd-turn-knob>
-    </div>
-</div>
+
 <div class="control-layout">
     <div class="control-container">
         <vd-control-label label="Gain"></vd-control-label>
