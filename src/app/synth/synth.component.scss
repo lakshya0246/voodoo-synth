@@ -71,3 +71,19 @@
     height: calc(100% - 48px);
     margin: 0;
 }
+
+.radio-group {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+    .radio {
+        display: flex;
+        flex-direction: column;
+        justify-self: center;
+        vd-control-label {
+            margin: auto;
+            margin-bottom: 8px;
+        }
+    }
+}

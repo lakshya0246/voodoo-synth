@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { v4 as uuidV4 } from 'uuid';
 
 @Component({
   selector: 'vd-radio-button',
@@ -6,7 +7,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./radio-button.component.scss'],
 })
 export class RadioButtonComponent implements OnInit {
-  constructor() {}
+  gradientId: string;
+  constructor() {
+    this.gradientId = uuidV4();
+  }
   @Input() checked: boolean = false;
   @Output() check: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   ngOnInit(): void {}
