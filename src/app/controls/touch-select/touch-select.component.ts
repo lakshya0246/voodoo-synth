@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-const WAVE_TYPES: OscillatorType[] = ['sawtooth', 'sine', 'square', 'triangle'];
+const WAVE_TYPES: OscillatorType[] = ['sine', 'square', 'triangle', 'sawtooth'];
 
 @Component({
   selector: 'vd-touch-select',

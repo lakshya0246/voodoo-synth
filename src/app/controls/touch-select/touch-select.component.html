@@ -1,10 +1,10 @@
 <img class="change-icon" [ngClass]="{'disabled': selectedWave < 1}" (click)="scroll(true)"
     src="../../../assets/icons/arrow_right.svg" />
 <div [scrollLeft]="selectedWave*70" class="wave-icons">
-    <img class="wave-icon" src="../../../assets/icons/saw.svg" />
     <img class="wave-icon" src="../../../assets/icons/sine.svg" />
     <img class="wave-icon" src="../../../assets/icons/square.svg" />
     <img class="wave-icon" src="../../../assets/icons/triangle.svg" />
+    <img class="wave-icon" src="../../../assets/icons/saw.svg" />
 </div>
 <img class="change-icon" [ngClass]="{'disabled': selectedWave > 2}" (click)="scroll()"
     src="../../../assets/icons/arrow_right.svg" />
