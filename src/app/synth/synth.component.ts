@@ -112,21 +112,22 @@ export class SynthComponent implements AfterViewInit {
     const sampleEl = this.sampleEls.get(index);
     if (track && sampleEl) {
       if (checked) {
-        track.connect(this.audioContext.destination);
+        track.connect(this.analyserNode).connect(this.audioContext.destination);
         sampleEl.nativeElement.loop = true;
         // start all from beginning
         if (this.sampleEls.length) {
           this.sampleEls.forEach((_sampleEl, i) => {
             _sampleEl.nativeElement.currentTime =
-              this.audioContext.currentTime + 50;
+              this.audioContext.currentTime + 0.5;
           });
         }
-        sampleEl.nativeElement.currentTime = this.audioContext.currentTime + 50;
+        sampleEl.nativeElement.currentTime =
+          this.audioContext.currentTime + 0.5;
         sampleEl.nativeElement
           .play()
           .then(() => (this.sampleTrackPlaying[index] = true));
       } else {
-        track.disconnect(this.audioContext.destination);
+        track.disconnect(this.analyserNode);
         sampleEl.nativeElement.pause();
       }
     }
