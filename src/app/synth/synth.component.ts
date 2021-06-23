@@ -1,4 +1,13 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
+import { sample } from 'rxjs/operators';
 import { KEY_NOTE_FREQUENCY_MAP } from './notes';
 
 @Component({
@@ -6,13 +15,23 @@ import { KEY_NOTE_FREQUENCY_MAP } from './notes';
   templateUrl: './synth.component.html',
   styleUrls: ['./synth.component.scss'],
 })
-export class SynthComponent {
+export class SynthComponent implements AfterViewInit {
   values = [12, 6];
   private audioContext = new AudioContext();
   private gain = this.audioContext.createGain();
   playing: boolean = false;
   analyserNode: AnalyserNode = this.audioContext.createAnalyser();
   private interval: any;
+  private sampleTracks: Array<MediaElementAudioSourceNode | undefined> = [
+    undefined,
+    undefined,
+    undefined,
+  ];
+  private sampleTrackPlaying: boolean[] = [false, false, false];
+
+  @ViewChildren('sampleLoopEl') sampleEls!: QueryList<
+    ElementRef<HTMLAudioElement>
+  >;
   oscillatorType: OscillatorType = 'sine';
   noteSequence = [
     'a',
@@ -78,6 +97,40 @@ export class SynthComponent {
   noteSequence2 = ['k', 'j', 's', 'a'];
 
   constructor() {}
+  ngAfterViewInit(): void {
+    if (this.sampleEls.length) {
+      this.sampleEls.forEach((sampleEl, i) => {
+        this.sampleTracks[i] = this.audioContext.createMediaElementSource(
+          sampleEl.nativeElement
+        );
+      });
+    }
+  }
+
+  toggleSample(checked: boolean, index: number) {
+    const track = this.sampleTracks[index];
+    const sampleEl = this.sampleEls.get(index);
+    if (track && sampleEl) {
+      if (checked) {
+        track.connect(this.audioContext.destination);
+        sampleEl.nativeElement.loop = true;
+        // start all from beginning
+        if (this.sampleEls.length) {
+          this.sampleEls.forEach((_sampleEl, i) => {
+            _sampleEl.nativeElement.currentTime =
+              this.audioContext.currentTime + 50;
+          });
+        }
+        sampleEl.nativeElement.currentTime = this.audioContext.currentTime + 50;
+        sampleEl.nativeElement
+          .play()
+          .then(() => (this.sampleTrackPlaying[index] = true));
+      } else {
+        track.disconnect(this.audioContext.destination);
+        sampleEl.nativeElement.pause();
+      }
+    }
+  }
 
   play() {
     this.gain = this.audioContext.createGain();
