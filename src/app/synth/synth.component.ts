@@ -6,7 +6,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { HarmonicOscillator } from './instruments/oscillator1';
+import { HarmonicOscillator } from './instruments/harmonic-oscillator';
 import { KEY_NOTE_FREQUENCY_MAP } from './notes';
 
 @Component({
