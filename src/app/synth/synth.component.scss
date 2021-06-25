@@ -87,3 +87,62 @@
         }
     }
 }
+
+.control-layout.resolution-beat {
+    position: absolute;
+    width: 224px;
+    top: 24px;
+    right: 28px;
+    padding: 24px;
+    padding-top: 42px;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .control-layout-boundary {
+        top: 0px;
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: calc(100% - 48px);
+    }
+
+    .control-container {
+        margin: 0;
+        margin-bottom: 12px;
+    }
+}
+
+.main-area {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 48px repeat(4, 1fr);
+    grid-template-rows: 140px repeat(5, 1fr);
+    row-gap: 24px;
+
+    grid-template-areas:
+        "o a a a a"
+        "o x x wave b"
+        "o samples  c c c"
+        "o d d d d"
+        "o e e e e"
+        "o f f f f";
+
+    .control-layout.attack-release {
+        grid-area: x;
+        justify-self: flex-start;
+    }
+    .control-container.wave-selector {
+        z-index: 10;
+        position: relative;
+        grid-area: wave;
+    }
+    .radio-group {
+        grid-area: samples;
+        align-self: center;
+        justify-self: center;
+        padding-left: 28px;
+    }
+}
