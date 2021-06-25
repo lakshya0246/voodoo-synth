@@ -146,7 +146,10 @@ export const KEY_NOTE_FREQUENCY_MAP: { [key: string]: number } = {
   g: NOTE_VALUES.G4,
   h: NOTE_VALUES.A4,
   j: NOTE_VALUES.B4,
-  k: NOTE_VALUES.C4,
+  k: NOTE_VALUES.C4 * 2,
+  l: NOTE_VALUES.D4 * 2,
+  ';': NOTE_VALUES.E4 * 2,
+  "'": NOTE_VALUES.F4 * 2,
 
   w: NOTE_VALUES['C#4'],
   e: NOTE_VALUES['D#4'],

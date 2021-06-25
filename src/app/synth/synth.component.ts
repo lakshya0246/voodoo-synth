@@ -110,6 +110,7 @@ export class SynthComponent implements AfterViewInit {
 
   @HostListener('document:keydown', ['$event'])
   onPress(event: KeyboardEvent) {
+    console.log(event.key, event.keyCode);
     const keyNoteFrequency = KEY_NOTE_FREQUENCY_MAP[event.key];
 
     if (keyNoteFrequency) {
