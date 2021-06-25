@@ -15,13 +15,9 @@ import { KEY_NOTE_FREQUENCY_MAP } from './notes';
   styleUrls: ['./synth.component.scss'],
 })
 export class SynthComponent implements AfterViewInit {
-  values = [12, 6];
   private audioContext = new AudioContext();
-  private gain = this.audioContext.createGain();
-  playing: boolean = false;
   analyserNode: AnalyserNode = this.audioContext.createAnalyser();
   beatingOffset: number = 0;
-  private interval: any;
   private sampleTracks: Array<MediaElementAudioSourceNode | undefined> = [
     undefined,
     undefined,
@@ -71,16 +67,6 @@ export class SynthComponent implements AfterViewInit {
     }
   }
 
-  play() {
-    this.gain = this.audioContext.createGain();
-    const oscillator = this.audioContext.createOscillator();
-    oscillator.type = 'sine';
-    oscillator.connect(this.gain);
-    this.gain.connect(this.audioContext.destination);
-    oscillator.start(0);
-    this.playing = true;
-  }
-
   playNote(frequency = 440.0) {
     const harmonica = new HarmonicOscillator(
       this.audioContext,
@@ -88,46 +74,22 @@ export class SynthComponent implements AfterViewInit {
       this.oscillatorType,
       this.beatingOffset
     );
-    this.gain = this.audioContext.createGain();
-    this.gain.gain.value = 0.2;
+    const gain = this.audioContext.createGain();
+    gain.gain.value = 1 / 6;
     harmonica
-      .connect(this.gain)
+      .connect(gain)
       .connect(this.analyserNode)
       .connect(this.audioContext.destination);
     harmonica.start(0);
-    this.gain.gain.exponentialRampToValueAtTime(
+    gain.gain.exponentialRampToValueAtTime(
       0.5,
       this.audioContext.currentTime + 0.2
     );
-    this.stop(10);
-    // setTimeout(() => {
-    // }, 10000);
-  }
-
-  stopNoteSequence() {
-    clearInterval(this.interval);
-  }
-  playNoteSequence(notes: string[]) {
-    for (let i = 0; i < notes.length; i++) {
-      setTimeout(() => {
-        this.playNote(KEY_NOTE_FREQUENCY_MAP[notes[i]]);
-      }, i * 500);
-    }
-    this.interval = setInterval(() => {
-      for (let i = 0; i < notes.length; i++) {
-        setTimeout(() => {
-          this.playNote(KEY_NOTE_FREQUENCY_MAP[notes[i]]);
-        }, i * 500);
-      }
-    }, notes.length * 500);
-  }
-
-  stop(delay: number = 0.04) {
-    this.gain.gain.exponentialRampToValueAtTime(
+    gain.gain.exponentialRampToValueAtTime(
       0.00001,
-      this.audioContext.currentTime + delay
+      this.audioContext.currentTime + 5
     );
-    this.playing = false;
+    harmonica.stop(this.audioContext.currentTime + 5 + 0.05);
   }
 
   @HostListener('document:keydown', ['$event'])
