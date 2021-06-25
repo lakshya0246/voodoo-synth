@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class TurnKnobComponent implements OnInit {
   @Input() isSmall: boolean = false;
+  @Input() initValue: number = 0;
   /**
    * Will go from -threshold to +threshold
    */
@@ -15,6 +16,10 @@ export class TurnKnobComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  convertInitToPercent(): number {
+    return (this.initValue / this.threshold) * 100;
+  }
 
   onChange(percent: number) {
     this.percent.emit(+(percent / 100).toFixed(2) * this.threshold);

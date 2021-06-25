@@ -18,6 +18,20 @@ export class SynthComponent implements AfterViewInit {
   private audioContext = new AudioContext();
   analyserNode: AnalyserNode = this.audioContext.createAnalyser();
   beatingOffset: number = 0;
+  private _attack: number = 0.25;
+  public get attack(): number {
+    return this._attack;
+  }
+  public set attack(value: number) {
+    this._attack = value + 0.5;
+  }
+  private _release: number = 1.25;
+  public get release(): number {
+    return this._release;
+  }
+  public set release(value: number) {
+    this._release = value + 2.5;
+  }
   private sampleTracks: Array<MediaElementAudioSourceNode | undefined> = [
     undefined,
     undefined,
@@ -83,13 +97,15 @@ export class SynthComponent implements AfterViewInit {
     harmonica.start(0);
     gain.gain.exponentialRampToValueAtTime(
       0.5,
-      this.audioContext.currentTime + 0.2
+      this.audioContext.currentTime + this.attack
     );
     gain.gain.exponentialRampToValueAtTime(
       0.00001,
-      this.audioContext.currentTime + 5
+      this.audioContext.currentTime + this.attack + this.release
     );
-    harmonica.stop(this.audioContext.currentTime + 5 + 0.05);
+    harmonica.stop(
+      this.audioContext.currentTime + this.attack + this.release + 0.05
+    );
   }
 
   @HostListener('document:keydown', ['$event'])

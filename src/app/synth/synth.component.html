@@ -24,6 +24,19 @@
         <vd-radio-button (check)="toggleSample($event, 2)"></vd-radio-button>
     </div>
 </div>
+<div class="control-layout attack-release">
+    <div class="control-container">
+        <vd-control-label label="Attack"></vd-control-label>
+        <vd-turn-knob [initValue]="-.25" [threshold]=".5" (percent)="attack = $event">
+        </vd-turn-knob>
+    </div>
+    <div class="control-container">
+        <vd-control-label label="Release"></vd-control-label>
+        <vd-turn-knob [initValue]="-1.25" [threshold]="2.5" (percent)="release = $event">
+        </vd-turn-knob>
+    </div>
+</div>
+
 <div class="control-layout">
     <div class="control-container">
         <vd-touch-select (selectWave)="oscillatorType = $event"></vd-touch-select>

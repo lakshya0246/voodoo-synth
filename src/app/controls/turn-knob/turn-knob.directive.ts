@@ -25,6 +25,8 @@ export class TurnKnobDirective implements OnInit {
   private mouseMoveSubscription: Subscription | undefined = undefined;
   @Input() track: HTMLOrSVGElement | null = null;
   @Input() isSmall: boolean = false;
+  @Input() initValue: number = 0;
+
   @Output() change: EventEmitter<number> = new EventEmitter<number>();
   radius = 62;
   constructor(private el: ElementRef<HTMLDivElement>) {}
@@ -33,13 +35,13 @@ export class TurnKnobDirective implements OnInit {
     if (this.isSmall) {
       this.radius = 47;
     }
-
+    this.percent = this.initValue;
     (
       this.el.nativeElement.children[0] as HTMLElement
-    ).style.transform = `rotate(0deg)`;
+    ).style.transform = `rotate(${(this.initValue / 100) * this.MAX_ANGLE}deg)`;
     (
       this.el.nativeElement.children[2] as HTMLElement
-    ).style.transform = `rotate(0deg)`;
+    ).style.transform = `rotate(${(this.initValue / 100) * this.MAX_ANGLE}deg)`;
 
     if (this.track) {
       const track = this.track as SVGElement;
@@ -50,7 +52,7 @@ export class TurnKnobDirective implements OnInit {
         3.14 * this.radius * 2 - ((3.14 * this.radius * 2) / 360) * 80;
       path.style.strokeDasharray = `${circumference} ${circumference}`;
       path.style.strokeDashoffset = (
-        ((0 / 2 + 50) / 100) *
+        ((-this.initValue / 2 + 50) / 100) *
         circumference
       ).toString();
     }
