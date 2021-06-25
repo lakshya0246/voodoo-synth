@@ -3,11 +3,10 @@ import {
   Component,
   ElementRef,
   HostListener,
-  OnInit,
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { sample } from 'rxjs/operators';
+import { HarmonicOscillator } from './instruments/oscillator1';
 import { KEY_NOTE_FREQUENCY_MAP } from './notes';
 
 @Component({
@@ -21,6 +20,7 @@ export class SynthComponent implements AfterViewInit {
   private gain = this.audioContext.createGain();
   playing: boolean = false;
   analyserNode: AnalyserNode = this.audioContext.createAnalyser();
+  beatingOffset: number = 0;
   private interval: any;
   private sampleTracks: Array<MediaElementAudioSourceNode | undefined> = [
     undefined,
@@ -33,68 +33,6 @@ export class SynthComponent implements AfterViewInit {
     ElementRef<HTMLAudioElement>
   >;
   oscillatorType: OscillatorType = 'sine';
-  noteSequence = [
-    'a',
-    's',
-    'd',
-    'f',
-
-    'a',
-    's',
-    'w',
-    'd',
-
-    'f',
-    'k',
-    'e',
-    'k',
-
-    'a',
-    's',
-    'd',
-    'f',
-
-    'a',
-    's',
-    'w',
-    'd',
-
-    'f',
-    'j',
-    'e',
-    'j',
-
-    'a',
-    's',
-    'w',
-    'd',
-
-    'f',
-    'j',
-    'e',
-    'j',
-
-    'a',
-    's',
-    'w',
-    'd',
-
-    'f',
-    'j',
-    'e',
-    'j',
-
-    'a',
-    's',
-    'w',
-    'd',
-
-    'f',
-    'j',
-    'e',
-    'j',
-  ];
-  noteSequence2 = ['k', 'j', 's', 'a'];
 
   constructor() {}
   ngAfterViewInit(): void {
@@ -144,17 +82,26 @@ export class SynthComponent implements AfterViewInit {
   }
 
   playNote(frequency = 440.0) {
+    const harmonica = new HarmonicOscillator(
+      this.audioContext,
+      frequency,
+      this.oscillatorType,
+      this.beatingOffset
+    );
     this.gain = this.audioContext.createGain();
-    this.gain.gain.value = 0.5;
-    const oscillator = this.audioContext.createOscillator();
-    oscillator.frequency.value = frequency;
-    oscillator.type = this.oscillatorType;
-    oscillator
+    this.gain.gain.value = 0.2;
+    harmonica
       .connect(this.gain)
       .connect(this.analyserNode)
       .connect(this.audioContext.destination);
-    oscillator.start(0);
-    this.stop(1.5);
+    harmonica.start(0);
+    this.gain.gain.exponentialRampToValueAtTime(
+      0.5,
+      this.audioContext.currentTime + 0.2
+    );
+    this.stop(10);
+    // setTimeout(() => {
+    // }, 10000);
   }
 
   stopNoteSequence() {
@@ -183,12 +130,8 @@ export class SynthComponent implements AfterViewInit {
     this.playing = false;
   }
 
-  @HostListener('document:keyup', ['$event'])
+  @HostListener('document:keydown', ['$event'])
   onPress(event: KeyboardEvent) {
-    if (event.code === 'Space') {
-      this.playNoteSequence(this.noteSequence);
-      this.playNoteSequence(this.noteSequence2);
-    }
     const keyNoteFrequency = KEY_NOTE_FREQUENCY_MAP[event.key];
 
     if (keyNoteFrequency) {

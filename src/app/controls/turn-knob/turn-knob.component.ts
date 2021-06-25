@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'vd-turn-knob',
@@ -7,7 +7,16 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TurnKnobComponent implements OnInit {
   @Input() isSmall: boolean = false;
+  /**
+   * Will go from -threshold to +threshold
+   */
+  @Input() threshold: number = 100;
+  @Output() percent: EventEmitter<number> = new EventEmitter<number>();
   constructor() {}
 
   ngOnInit(): void {}
+
+  onChange(percent: number) {
+    this.percent.emit(+(percent / 100).toFixed(2) * this.threshold);
+  }
 }

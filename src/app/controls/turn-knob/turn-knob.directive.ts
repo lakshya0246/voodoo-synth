@@ -1,9 +1,11 @@
 import {
   Directive,
   ElementRef,
+  EventEmitter,
   HostListener,
   Input,
   OnInit,
+  Output,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -17,18 +19,40 @@ import { clampInteger } from '../controls.helpers';
 export class TurnKnobDirective implements OnInit {
   counter: number = 0;
   private prevMouseYPos: number = 0;
-  private percent: number = -100;
+  private percent: number = 0;
   private readonly DRAG_THRESHOLD: number = 200;
   private readonly MAX_ANGLE: number = 140;
   private mouseMoveSubscription: Subscription | undefined = undefined;
   @Input() track: HTMLOrSVGElement | null = null;
   @Input() isSmall: boolean = false;
+  @Output() change: EventEmitter<number> = new EventEmitter<number>();
   radius = 62;
   constructor(private el: ElementRef<HTMLDivElement>) {}
 
   ngOnInit(): void {
     if (this.isSmall) {
       this.radius = 47;
+    }
+
+    (
+      this.el.nativeElement.children[0] as HTMLElement
+    ).style.transform = `rotate(0deg)`;
+    (
+      this.el.nativeElement.children[2] as HTMLElement
+    ).style.transform = `rotate(0deg)`;
+
+    if (this.track) {
+      const track = this.track as SVGElement;
+      const path = track.children[1] as SVGCircleElement;
+
+      // subtract arc from circle
+      const circumference =
+        3.14 * this.radius * 2 - ((3.14 * this.radius * 2) / 360) * 80;
+      path.style.strokeDasharray = `${circumference} ${circumference}`;
+      path.style.strokeDashoffset = (
+        ((0 / 2 + 50) / 100) *
+        circumference
+      ).toString();
     }
   }
 
@@ -44,10 +68,11 @@ export class TurnKnobDirective implements OnInit {
     (
       this.el.nativeElement.children[0] as HTMLElement
     ).style.transform = `rotate(${(clamped / 100) * this.MAX_ANGLE}deg)`;
-    this.percent = clamped;
     (
       this.el.nativeElement.children[2] as HTMLElement
     ).style.transform = `rotate(${(clamped / 100) * this.MAX_ANGLE}deg)`;
+    this.percent = clamped;
+    this.change.emit(clamped);
     if (this.track) {
       const track = this.track as SVGElement;
       const path = track.children[1] as SVGCircleElement;

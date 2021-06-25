@@ -33,8 +33,9 @@
         <vd-turn-knob></vd-turn-knob>
     </div>
     <div class="control-container">
-        <vd-control-label label="Volume"></vd-control-label>
-        <vd-turn-knob></vd-turn-knob>
+        <vd-control-label label="Beat"></vd-control-label>
+        <vd-turn-knob [threshold]="50" (percent)="beatingOffset = $event" [isSmall]="true">
+        </vd-turn-knob>
     </div>
 </div>
 

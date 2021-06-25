@@ -14,7 +14,7 @@
     width: calc(var(--knob-size) - 4px);
 
     & > svg.base {
-        transform: rotate(-140deg);
+        transform: rotate(0deg);
         display: block;
         height: var(--knob-size);
         width: var(--knob-size);
@@ -34,7 +34,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transform: rotate(-140deg);
+        transform: rotate(0deg);
         position: relative;
         border-radius: 50%;
         height: var(--knob-size);
