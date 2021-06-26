@@ -33,7 +33,7 @@ export class TurnKnobDirective implements OnInit {
 
   ngOnInit(): void {
     if (this.isSmall) {
-      this.radius = 47;
+      this.radius = 45;
     }
     this.percent = this.initValue;
     (

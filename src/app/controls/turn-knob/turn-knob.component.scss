@@ -52,19 +52,6 @@
             z-index: 20;
         }
     }
-
-    &.small {
-        --knob-size: 60px;
-        svg.base {
-            circle {
-                stroke-dasharray: none;
-            }
-        }
-
-        .control-arrow::after {
-            top: 9px;
-        }
-    }
 }
 
 .turn-knob-shadow-container {
@@ -81,9 +68,15 @@ svg.track {
 }
 
 :host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
     background: white;
     border-radius: 50%;
-    padding: 16px;
+    padding: 12px;
     position: relative;
     display: flex;
     justify-content: center;
@@ -95,5 +88,21 @@ svg.track {
 
     svg {
         color: var(--primary);
+    }
+
+    &.small {
+        padding: 6px;
+        .control {
+            --knob-size: 60px;
+            svg.base {
+                circle {
+                    stroke-dasharray: none;
+                }
+            }
+
+            .control-arrow::after {
+                top: 9px;
+            }
+        }
     }
 }
