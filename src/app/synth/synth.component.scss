@@ -6,8 +6,8 @@
     align-items: center;
     justify-content: center;
     min-height: 50vh;
-    height: 720px;
-    width: 954px;
+    height: 600px;
+    width: 960px;
     overflow: hidden;
     box-shadow: 2px 4px 12px 0px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
@@ -16,7 +16,6 @@
 .top-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 52px;
 
     .model-name {
         justify-self: center;
@@ -35,10 +34,8 @@
             margin-top: -36px;
         }
     }
-    position: absolute;
-    top: 24px;
-    left: 24px;
 }
+
 .control-container {
     display: flex;
     align-items: center;
@@ -46,7 +43,7 @@
     flex-direction: column;
 
     vd-control-label {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
     }
 }
 
@@ -57,7 +54,7 @@
     justify-content: center;
 
     & > .control-container {
-        margin-right: 24px;
+        margin-right: 16px;
 
         &:last-child {
             margin-right: 0;
@@ -68,7 +65,7 @@
 .base-plate-border {
     z-index: 0;
     position: absolute;
-    height: calc(100% - 48px);
+    width: calc(100% - 32px);
     margin: 0;
 }
 
@@ -83,19 +80,12 @@
         justify-self: center;
         vd-control-label {
             margin: auto;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
     }
 }
 
 .control-layout.resolution-beat {
-    position: absolute;
-    width: 224px;
-    top: 24px;
-    right: 28px;
-    padding: 24px;
-    padding-top: 42px;
-
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -114,35 +104,66 @@
     }
 }
 
-.main-area {
+.gain-effects {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    vd-touch-select {
+        margin-bottom: 20px;
+    }
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .radio-group {
+        margin-bottom: 16px;
+    }
+
+    .control-layout {
+        flex: 2;
+    }
+}
+
+.main-container {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: 48px repeat(4, 1fr);
-    grid-template-rows: 140px repeat(5, 1fr);
-    row-gap: 24px;
+    grid-template-columns: 48px repeat(11, 1fr) 24px;
+    grid-template-rows: 24px repeat(10, 1fr) 48px;
 
-    grid-template-areas:
-        "o a a a a"
-        "o x x wave b"
-        "o samples  c c c"
-        "o d d d d"
-        "o e e e e"
-        "o f f f f";
+    .top-section {
+        grid-column: 2 / span 7;
+        grid-row: 2 / span 2;
+        justify-self: flex-end;
+        width: 100%;
+        padding-right: 20px;
+        vd-display {
+            justify-self: flex-end;
+        }
+    }
 
-    .control-layout.attack-release {
-        grid-area: x;
-        justify-self: flex-start;
+    .control-layout.resolution-beat {
+        height: 100%;
+        width: 100%;
+        grid-row: 1 / span 12;
+        grid-column: 9 / span 4;
+        align-content: center;
     }
-    .control-container.wave-selector {
-        z-index: 10;
-        position: relative;
-        grid-area: wave;
+
+    .gain-effects {
+        padding-left: 26px;
+        grid-row: 4 / span 8;
+        grid-column: 6 / span 3;
+        justify-content: flex-end;
     }
-    .radio-group {
-        grid-area: samples;
-        align-self: center;
-        justify-self: center;
-        padding-left: 28px;
+
+    .left-section {
+        padding-top: 34px;
+        padding-left: 12px;
+        grid-row: 4 / span 8;
+        grid-column: 2 / span 4;
     }
 }

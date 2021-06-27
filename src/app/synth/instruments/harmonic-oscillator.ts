@@ -16,7 +16,7 @@ export class HarmonicOscillator {
     this.beatingOscillator = audioContext.createOscillator();
     this.beatingOscillator.frequency.value = frequency + beatOffset;
     this.gainBeating = audioContext.createGain();
-    this.gainBeating.gain.value = 0.6;
+    this.gainBeating.gain.value = 0.7;
 
     for (let i = 0; i < 4; i++) {
       const overtone = audioContext.createOscillator();

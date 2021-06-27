@@ -1,70 +1,77 @@
 <img class="base-plate-border" src="../../assets/materials/milled_border.svg" alt="">
-<br />
-<div class="top-section">
-    <div class="model-name">
-        Voodoo
-        <p>v4000-S</p>
+<div class="main-container">
+    <div class="top-section">
+        <div class="model-name">
+            Voodoo
+            <p>v4000-S</p>
+        </div>
+        <vd-display [config]="{trackName: 'blue moon', analyserNode:analyserNode}"></vd-display>
     </div>
-    <vd-display [config]="{trackName: 'Blue Moon', analyserNode:analyserNode}"></vd-display>
-</div>
-<div class="main-area">
-    <div class="control-container wave-selector">
+
+
+
+    <div class="left-section">
+        <div class="radio-group">
+            <div class="radio">
+                <audio #sampleLoopEl src="../../assets/samples/ambience-normalized.wav"></audio>
+                <vd-control-label label="1"></vd-control-label>
+                <vd-radio-button (check)="toggleSample($event, 0)"></vd-radio-button>
+            </div>
+            <div class="radio">
+                <audio #sampleLoopEl src="../../assets/samples/drums-normalized.wav"></audio>
+                <vd-control-label label="2"></vd-control-label>
+                <vd-radio-button (check)="toggleSample($event, 1)"></vd-radio-button>
+            </div>
+            <div class="radio">
+                <audio #sampleLoopEl src="../../assets/samples/hit-hat-normalized.wav"></audio>
+                <vd-control-label label="3"></vd-control-label>
+                <vd-radio-button (check)="toggleSample($event, 2)"></vd-radio-button>
+            </div>
+        </div>
+        <div class="control-layout attack-release">
+            <div class="control-container">
+                <vd-control-label label="Release"></vd-control-label>
+                <vd-turn-knob [initValue]="-1.25" [threshold]="2.5" (percent)="release = $event">
+                </vd-turn-knob>
+            </div>
+            <div class="control-container">
+                <vd-control-label label="Attack"></vd-control-label>
+                <vd-turn-knob [initValue]="-.25" [threshold]=".5" (percent)="attack = $event">
+                </vd-turn-knob>
+            </div>
+        </div>
+    </div>
+    <div class="gain-effects">
         <vd-touch-select (selectWave)="oscillatorType = $event"></vd-touch-select>
-    </div>
-    <div class="radio-group">
-        <div class="radio">
-            <audio #sampleLoopEl src="../../assets/samples/ambience-normalized.wav"></audio>
-            <vd-control-label label="1"></vd-control-label>
-            <vd-radio-button (check)="toggleSample($event, 0)"></vd-radio-button>
-        </div>
-        <div class="radio">
-            <audio #sampleLoopEl src="../../assets/samples/drums-normalized.wav"></audio>
-            <vd-control-label label="2"></vd-control-label>
-            <vd-radio-button (check)="toggleSample($event, 1)"></vd-radio-button>
-        </div>
-        <div class="radio">
-            <audio #sampleLoopEl src="../../assets/samples/hit-hat-normalized.wav"></audio>
-            <vd-control-label label="3"></vd-control-label>
-            <vd-radio-button (check)="toggleSample($event, 2)"></vd-radio-button>
+        <div class="control-layout">
+            <div class="control-container">
+                <vd-control-label label="Gain"></vd-control-label>
+                <vd-fader></vd-fader>
+            </div>
+            <div class="control-container">
+                <vd-control-label label="Effects"></vd-control-label>
+                <vd-fader></vd-fader>
+            </div>
         </div>
     </div>
-    <div class="control-layout attack-release">
-        <div class="control-container">
-            <vd-control-label label="Release"></vd-control-label>
-            <vd-turn-knob [initValue]="-1.25" [threshold]="2.5" (percent)="release = $event">
-            </vd-turn-knob>
-        </div>
-        <div class="control-container">
-            <vd-control-label label="Attack"></vd-control-label>
-            <vd-turn-knob [initValue]="-.25" [threshold]=".5" (percent)="attack = $event">
-            </vd-turn-knob>
-        </div>
-    </div>
+    <div class="control-layout resolution-beat">
+        <img class="control-layout-boundary" src="../../assets/materials/vertical_knob_group_boundary.svg" alt="">
 
-</div>
-
-<div class="control-layout resolution-beat">
-    <img class="control-layout-boundary" src="../../assets/materials/vertical_knob_group_boundary.svg" alt="">
-
-    <div class="control-container">
         <!-- Controls the number of harmonics -->
-        <vd-control-label label="Resolution"></vd-control-label>
-        <vd-turn-knob></vd-turn-knob>
-    </div>
-    <div class="control-container">
-        <vd-control-label label="Beat"></vd-control-label>
-        <vd-turn-knob [threshold]="50" (percent)="beatingOffset = $event" [isSmall]="true">
-        </vd-turn-knob>
+        <div class="control-container">
+            <vd-control-label label="Resolution"></vd-control-label>
+            <vd-turn-knob></vd-turn-knob>
+        </div>
+        <div class="control-container">
+            <vd-control-label label="Beat"></vd-control-label>
+            <vd-turn-knob [threshold]="50" (percent)="beatingOffset = $event" [isSmall]="true">
+            </vd-turn-knob>
+        </div>
+        <!-- Controls the frequency randomness of harmonics -->
+        <div class="control-container">
+            <vd-control-label label="Rand"></vd-control-label>
+            <vd-turn-knob [threshold]="50" (percent)="beatingOffset = $event" [isSmall]="true">
+            </vd-turn-knob>
+        </div>
     </div>
 </div>
-<!-- 
-<div class="control-layout">
-    <div class="control-container">
-        <vd-control-label label="Gain"></vd-control-label>
-        <vd-fader></vd-fader>
-    </div>
-    <div class="control-container">
-        <vd-control-label label="Gain"></vd-control-label>
-        <vd-fader></vd-fader>
-    </div>
-</div> -->
