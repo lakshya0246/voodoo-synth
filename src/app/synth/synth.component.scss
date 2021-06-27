@@ -175,10 +175,12 @@ div.vandalism {
     height: 100%;
     width: 100%;
     z-index: 15;
+    pointer-events: none;
 
     & img.vandalism {
         display: block;
         position: absolute;
+        pointer-events: none;
     }
 
     & img.vandalism:nth-child(1) {

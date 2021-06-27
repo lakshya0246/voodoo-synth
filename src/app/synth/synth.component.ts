@@ -17,6 +17,9 @@ import { KEY_NOTE_FREQUENCY_MAP } from './notes';
 export class SynthComponent implements AfterViewInit {
   private audioContext = new AudioContext();
   analyserNode: AnalyserNode = this.audioContext.createAnalyser();
+  playing: {
+    [note: string]: { voc: HarmonicOscillator; voa: GainNode } | undefined;
+  } = {};
   beatingOffset: number = 0;
   private _attack: number = 0.25;
   public get attack(): number {
@@ -89,31 +92,46 @@ export class SynthComponent implements AfterViewInit {
       this.beatingOffset
     );
     const gain = this.audioContext.createGain();
-    gain.gain.value = 1 / 6;
+    gain.gain.value = 0.5;
     harmonica
       .connect(gain)
       .connect(this.analyserNode)
       .connect(this.audioContext.destination);
     harmonica.start(0);
     gain.gain.exponentialRampToValueAtTime(
-      0.5,
-      this.audioContext.currentTime + this.attack
+      0.2,
+      this.audioContext.currentTime + Math.max(this.attack, 0.05)
     );
-    gain.gain.exponentialRampToValueAtTime(
-      0.00001,
-      this.audioContext.currentTime + this.attack + this.release
-    );
-    harmonica.stop(
-      this.audioContext.currentTime + this.attack + this.release + 0.05
-    );
+
+    return { voa: gain, voc: harmonica };
   }
 
   @HostListener('document:keydown', ['$event'])
   onPress(event: KeyboardEvent) {
     const keyNoteFrequency = KEY_NOTE_FREQUENCY_MAP[event.key];
 
-    if (keyNoteFrequency) {
-      this.playNote(keyNoteFrequency);
+    if (keyNoteFrequency && !this.playing[keyNoteFrequency]) {
+      this.playing[keyNoteFrequency] = this.playNote(keyNoteFrequency);
+    }
+  }
+  @HostListener('document:keyup', ['$event'])
+  onUp(event: KeyboardEvent) {
+    const keyNoteFrequency = KEY_NOTE_FREQUENCY_MAP[event.key];
+    const playingVoice = this.playing[keyNoteFrequency];
+    console.log(playingVoice);
+
+    if (playingVoice) {
+      playingVoice.voa.gain.setTargetAtTime(
+        0,
+        this.audioContext.currentTime + this.attack,
+        Math.max(this.release, 0.05) / 3
+      );
+      playingVoice.voc.stop(
+        this.audioContext.currentTime +
+          Math.max(this.release + this.attack, 0.05) * 3 +
+          0.05
+      );
+      delete this.playing[keyNoteFrequency];
     }
   }
 }
