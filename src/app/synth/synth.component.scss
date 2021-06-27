@@ -168,3 +168,45 @@
         grid-column: 2 / span 4;
     }
 }
+
+div.vandalism {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 15;
+
+    & img.vandalism {
+        display: block;
+        position: absolute;
+    }
+
+    & img.vandalism:nth-child(1) {
+        top: 8px;
+        left: 112px;
+        width: 152px;
+    }
+
+    & img.vandalism:nth-child(2) {
+        left: 30px;
+        top: 155px;
+        width: 392px;
+    }
+
+    & img.vandalism:nth-child(3) {
+        left: 500px;
+        top: 201px;
+        width: 190px;
+    }
+
+    & img.vandalism:nth-child(4) {
+        right: 34px;
+        top: 50px;
+        width: 252px;
+    }
+
+    & img.vandalism:nth-child(5) {
+        right: 34px;
+        bottom: 3px;
+    }
+}
