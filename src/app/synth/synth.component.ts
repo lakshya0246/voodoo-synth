@@ -92,7 +92,7 @@ export class SynthComponent implements AfterViewInit {
       this.beatingOffset
     );
     const gain = this.audioContext.createGain();
-    gain.gain.value = 0.5;
+    gain.gain.value = 0.1;
     harmonica
       .connect(gain)
       .connect(this.analyserNode)
@@ -118,7 +118,6 @@ export class SynthComponent implements AfterViewInit {
   onUp(event: KeyboardEvent) {
     const keyNoteFrequency = KEY_NOTE_FREQUENCY_MAP[event.key];
     const playingVoice = this.playing[keyNoteFrequency];
-    console.log(playingVoice);
 
     if (playingVoice) {
       playingVoice.voa.gain.setTargetAtTime(
