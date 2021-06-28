@@ -4,6 +4,7 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
@@ -13,7 +14,7 @@ import { clampInteger } from '../controls.helpers';
 @Directive({
   selector: '[vdFader]',
 })
-export class FaderDirective {
+export class FaderDirective implements OnInit {
   counter: number = 0;
   private prevMouseYPos: number = 0;
   private yPosition: number = 0;
@@ -22,6 +23,13 @@ export class FaderDirective {
   @Input() initValue: number = 0;
   @Output() change: EventEmitter<number> = new EventEmitter<number>();
   constructor(private el: ElementRef<HTMLDivElement>) {}
+
+  ngOnInit(): void {
+    const clamped = this.initValue;
+    this.yPosition = clamped;
+    this.change.emit(clamped * -1);
+    this.el.nativeElement.style.transform = `translateY(${clamped}px)`;
+  }
 
   onMouseMove(e: MouseEvent) {
     const deltaPosition = clampInteger(
@@ -35,7 +43,7 @@ export class FaderDirective {
 
     this.prevMouseYPos = e.clientY;
     this.yPosition = clamped;
-    this.change.emit(clamped);
+    this.change.emit(clamped * -1);
     this.el.nativeElement.style.transform = `translateY(${clamped}px)`;
   }
 

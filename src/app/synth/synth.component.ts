@@ -51,6 +51,14 @@ export class SynthComponent implements AfterViewInit {
   public set resolution(value: number) {
     this._resolution = value + 10;
   }
+
+  private _masterGain: number = 0.5;
+  public get masterGain(): number {
+    return this._masterGain;
+  }
+  public set masterGain(value: number) {
+    this._masterGain = value + 0.5;
+  }
   private sampleTracks: Array<MediaElementAudioSourceNode | undefined> = [
     undefined,
     undefined,
@@ -111,8 +119,11 @@ export class SynthComponent implements AfterViewInit {
     );
     const gain = this.audioContext.createGain();
     gain.gain.value = 0.1;
+    const masterGain = this.audioContext.createGain();
+    masterGain.gain.value = Math.min(this.masterGain, 0.9);
     harmonica
       .connect(gain)
+      .connect(masterGain)
       .connect(this.analyserNode)
       .connect(this.audioContext.destination);
     harmonica.start(0);
