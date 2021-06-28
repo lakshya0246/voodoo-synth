@@ -79,7 +79,7 @@
         <!-- Controls the frequency randomness of harmonics -->
         <div class="control-container">
             <vd-control-label label="Rand"></vd-control-label>
-            <vd-turn-knob [threshold]="50" (percent)="beatingOffset = $event" [isSmall]="true">
+            <vd-turn-knob [initValue]="-50" [threshold]="50" (percent)="randomness = $event" [isSmall]="true">
             </vd-turn-knob>
         </div>
     </div>

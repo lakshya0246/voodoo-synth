@@ -1,3 +1,5 @@
+const RAND_CONSTANT = Math.random();
+const RAND_DIRECTION = Math.random() > 0.5 ? -1 : 1;
 export class HarmonicOscillator {
   private oscillator: OscillatorNode;
   private beatingOscillator: OscillatorNode;
@@ -8,7 +10,11 @@ export class HarmonicOscillator {
     audioContext: AudioContext,
     frequency: number,
     type: OscillatorType,
-    beatOffset: number
+    beatOffset: number,
+    /**
+     * 0 to 1
+     */
+    randomnessFactor: number = 0.5
   ) {
     this.oscillator = audioContext.createOscillator();
     this.oscillator.frequency.value = frequency;
@@ -23,7 +29,9 @@ export class HarmonicOscillator {
       this.harmonics.push(overtone);
       this.gains.push(audioContext.createGain());
       this.gains[i].gain.value = 0.2;
-      overtone.frequency.value = frequency * (i + 1);
+      overtone.frequency.value =
+        frequency * (i + 1) +
+        RAND_DIRECTION * RAND_CONSTANT * 100 * randomnessFactor;
     }
   }
 
