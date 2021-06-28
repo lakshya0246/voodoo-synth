@@ -176,8 +176,10 @@ div.vandalism {
     width: 100%;
     z-index: 15;
     pointer-events: none;
+    user-select: none;
 
     & img.vandalism {
+        user-select: none;
         display: block;
         position: absolute;
         pointer-events: none;
