@@ -1,5 +1,5 @@
 <div class="knob-track"></div>
-<div class="control" vdFader>
+<div class="control" vdFader [initValue]="0" (change)="onChange($event)">
     <svg width="80" height="103" viewBox="0 0 80 103" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g filter="url(#filter0_ddd)">
             <path

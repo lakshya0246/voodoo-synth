@@ -1,4 +1,11 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
 import { clampInteger } from '../controls.helpers';
@@ -12,6 +19,8 @@ export class FaderDirective {
   private yPosition: number = 0;
   private readonly TRACK_THRESHOLD: number = 120;
   private mouseMoveSubscription: Subscription | undefined = undefined;
+  @Input() initValue: number = 0;
+  @Output() change: EventEmitter<number> = new EventEmitter<number>();
   constructor(private el: ElementRef<HTMLDivElement>) {}
 
   onMouseMove(e: MouseEvent) {
@@ -26,6 +35,7 @@ export class FaderDirective {
 
     this.prevMouseYPos = e.clientY;
     this.yPosition = clamped;
+    this.change.emit(clamped);
     this.el.nativeElement.style.transform = `translateY(${clamped}px)`;
   }
 

@@ -9,4 +9,8 @@ export class FaderComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  onChange(value: number) {
+    console.log(value);
+  }
 }
