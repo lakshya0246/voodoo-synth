@@ -69,7 +69,7 @@
         <!-- Controls the number of harmonics -->
         <div class="control-container">
             <vd-control-label label="Resolution"></vd-control-label>
-            <vd-turn-knob></vd-turn-knob>
+            <vd-turn-knob [initValue]="1" [threshold]="10" (percent)="resolution = $event"></vd-turn-knob>
         </div>
         <div class="control-container">
             <vd-control-label label="Beat"></vd-control-label>

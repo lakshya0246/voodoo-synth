@@ -43,6 +43,14 @@ export class SynthComponent implements AfterViewInit {
   public set randomness(value: number) {
     this._randomness = (value + 50) / 100;
   }
+
+  private _resolution: number = 4;
+  public get resolution(): number {
+    return this._resolution;
+  }
+  public set resolution(value: number) {
+    this._resolution = value + 10;
+  }
   private sampleTracks: Array<MediaElementAudioSourceNode | undefined> = [
     undefined,
     undefined,
@@ -98,7 +106,8 @@ export class SynthComponent implements AfterViewInit {
       frequency,
       this.oscillatorType,
       this.beatingOffset,
-      this.randomness
+      this.randomness,
+      this.resolution
     );
     const gain = this.audioContext.createGain();
     gain.gain.value = 0.1;

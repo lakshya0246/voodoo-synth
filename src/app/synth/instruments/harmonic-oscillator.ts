@@ -14,7 +14,11 @@ export class HarmonicOscillator {
     /**
      * 0 to 1
      */
-    randomnessFactor: number = 0.5
+    randomnessFactor: number,
+    /**
+     * 0 to 6
+     */
+    resolution: number
   ) {
     this.oscillator = audioContext.createOscillator();
     this.oscillator.frequency.value = frequency;
@@ -24,7 +28,7 @@ export class HarmonicOscillator {
     this.gainBeating = audioContext.createGain();
     this.gainBeating.gain.value = 0.7;
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < resolution; i++) {
       const overtone = audioContext.createOscillator();
       this.harmonics.push(overtone);
       this.gains.push(audioContext.createGain());
