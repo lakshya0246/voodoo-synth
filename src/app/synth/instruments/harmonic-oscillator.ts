@@ -6,6 +6,7 @@ export class HarmonicOscillator {
   private harmonics: OscillatorNode[] = [];
   private gains: GainNode[] = [];
   private gainBeating: GainNode;
+  private masterGain: GainNode;
   constructor(
     audioContext: AudioContext,
     frequency: number,
@@ -18,7 +19,8 @@ export class HarmonicOscillator {
     /**
      * 0 to 6
      */
-    resolution: number
+    resolution: number,
+    masterGainValue: number = 0.5
   ) {
     this.oscillator = audioContext.createOscillator();
     this.oscillator.frequency.value = frequency;
@@ -27,6 +29,8 @@ export class HarmonicOscillator {
     this.beatingOscillator.frequency.value = frequency + beatOffset;
     this.gainBeating = audioContext.createGain();
     this.gainBeating.gain.value = 0.7;
+    this.masterGain = audioContext.createGain();
+    this.masterGain.gain.value = masterGainValue;
 
     for (let i = 0; i < resolution; i++) {
       const overtone = audioContext.createOscillator();
@@ -53,9 +57,10 @@ export class HarmonicOscillator {
 
   connect(destination: AudioNode): AudioNode {
     this.harmonics.forEach((harmonic, i) => harmonic.connect(this.gains[i]));
-    this.gains.forEach((gain) => gain.connect(destination));
+    this.gains.forEach((gain) => gain.connect(this.masterGain));
     this.beatingOscillator.connect(this.gainBeating);
-    this.gainBeating.connect(destination);
+    this.gainBeating.connect(this.masterGain);
+    this.masterGain.connect(destination);
     return this.oscillator.connect(destination);
   }
 }

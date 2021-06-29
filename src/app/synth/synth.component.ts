@@ -59,6 +59,14 @@ export class SynthComponent implements AfterViewInit {
   public set masterGain(value: number) {
     this._masterGain = value + 0.5;
   }
+
+  private _effectsGain: number = 0.5;
+  public get effectsGain(): number {
+    return this._effectsGain;
+  }
+  public set effectsGain(value: number) {
+    this._effectsGain = value + 0.5;
+  }
   private sampleTracks: Array<MediaElementAudioSourceNode | undefined> = [
     undefined,
     undefined,
@@ -115,7 +123,8 @@ export class SynthComponent implements AfterViewInit {
       this.oscillatorType,
       this.beatingOffset,
       this.randomness,
-      this.resolution
+      this.resolution,
+      this.effectsGain
     );
     const gain = this.audioContext.createGain();
     gain.gain.value = 0.1;
