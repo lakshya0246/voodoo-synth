@@ -1,15 +1,15 @@
 .control {
     position: relative;
     transform-origin: 50% 30px;
-    transition: transform 100ms;
+    transition: transform 50ms;
 
     svg {
         padding-top: 42px;
-        cursor: grab;
+        cursor: n-resize;
     }
 
     .knob-slit {
-        cursor: grab;
+        cursor: n-resize;
         position: absolute;
         left: 50%;
         transform: translate(-50%, -50%);

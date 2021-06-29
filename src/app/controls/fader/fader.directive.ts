@@ -28,7 +28,7 @@ export class FaderDirective implements OnInit {
     const clamped = this.initValue;
     this.yPosition = clamped;
     this.change.emit(clamped * -1);
-    this.el.nativeElement.style.transform = `translateY(${clamped}px)`;
+    this.el.nativeElement.style.transform = `translate3d(0, ${clamped}px, 0)`;
   }
 
   onMouseMove(e: MouseEvent) {
@@ -44,7 +44,7 @@ export class FaderDirective implements OnInit {
     this.prevMouseYPos = e.clientY;
     this.yPosition = clamped;
     this.change.emit(clamped * -1);
-    this.el.nativeElement.style.transform = `translateY(${clamped}px)`;
+    this.el.nativeElement.style.transform = `translate3d(0, ${clamped}px, 0)`;
   }
 
   @HostListener('mousedown', ['$event'])
