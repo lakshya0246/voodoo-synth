@@ -30,6 +30,24 @@
         text-align: right;
     }
 
+    .right {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        flex-direction: column;
+
+    }
+    .beat-indicators {
+        display: flex;
+        vd-circular-beat-indicator {
+            margin-right: 8px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
     .lattice-filter {
         position: absolute;
         top: var(--padding);

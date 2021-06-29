@@ -17,6 +17,11 @@ import { KEY_NOTE_FREQUENCY_MAP } from './notes';
 export class SynthComponent implements AfterViewInit {
   private audioContext = new AudioContext();
   analyserNode: AnalyserNode = this.audioContext.createAnalyser();
+  trackAnalyserNodes: AnalyserNode[] = [
+    this.audioContext.createAnalyser(),
+    this.audioContext.createAnalyser(),
+    this.audioContext.createAnalyser(),
+  ];
   playing: {
     [note: string]: { voc: HarmonicOscillator; voa: GainNode } | undefined;
   } = {};
@@ -95,7 +100,9 @@ export class SynthComponent implements AfterViewInit {
     const sampleEl = this.sampleEls.get(index);
     if (track && sampleEl) {
       if (checked) {
-        track.connect(this.analyserNode).connect(this.audioContext.destination);
+        track
+          .connect(this.trackAnalyserNodes[index])
+          .connect(this.audioContext.destination);
         sampleEl.nativeElement.loop = true;
         // start all from beginning
         if (this.sampleEls.length) {
@@ -110,7 +117,7 @@ export class SynthComponent implements AfterViewInit {
           .play()
           .then(() => (this.sampleTrackPlaying[index] = true));
       } else {
-        track.disconnect(this.analyserNode);
+        track.disconnect(this.trackAnalyserNodes[index]);
         sampleEl.nativeElement.pause();
       }
     }
