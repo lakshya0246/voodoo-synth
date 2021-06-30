@@ -96,6 +96,9 @@ export class SynthComponent implements AfterViewInit {
   }
 
   toggleSample(checked: boolean, index: number) {
+    if (this.audioContext.state === 'suspended') {
+      this.audioContext.resume();
+    }
     const track = this.sampleTracks[index];
     const sampleEl = this.sampleEls.get(index);
     if (track && sampleEl) {
