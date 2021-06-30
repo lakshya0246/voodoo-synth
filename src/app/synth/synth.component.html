@@ -23,17 +23,17 @@
     <div class="left-section">
         <div class="radio-group">
             <div class="radio">
-                <audio #sampleLoopEl src="../../assets/samples/ambience-normalized.wav"></audio>
+                <audio #sampleLoopEl preload="auto" src="../../assets/samples/ambience-normalized.wav"></audio>
                 <vd-control-label label="1"></vd-control-label>
                 <vd-radio-button (check)="toggleSample($event, 0)"></vd-radio-button>
             </div>
             <div class="radio">
-                <audio #sampleLoopEl src="../../assets/samples/drums-normalized.wav"></audio>
+                <audio #sampleLoopEl preload="auto" src="../../assets/samples/drums-normalized.wav"></audio>
                 <vd-control-label label="2"></vd-control-label>
                 <vd-radio-button (check)="toggleSample($event, 1)"></vd-radio-button>
             </div>
             <div class="radio">
-                <audio #sampleLoopEl src="../../assets/samples/hit-hat-normalized.wav"></audio>
+                <audio #sampleLoopEl preload="auto" src="../../assets/samples/hit-hat-normalized.wav"></audio>
                 <vd-control-label label="3"></vd-control-label>
                 <vd-radio-button (check)="toggleSample($event, 2)"></vd-radio-button>
             </div>
