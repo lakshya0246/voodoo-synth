@@ -42,6 +42,9 @@ export class TurnKnobDirective implements OnInit {
     (
       this.el.nativeElement.children[2] as HTMLElement
     ).style.transform = `rotate(${(this.initValue / 100) * this.MAX_ANGLE}deg)`;
+    (
+      this.el.nativeElement.children[4] as HTMLElement
+    ).style.transform = `rotate(${(this.initValue / 100) * this.MAX_ANGLE}deg)`;
 
     if (this.track) {
       const track = this.track as SVGElement;
@@ -70,8 +73,15 @@ export class TurnKnobDirective implements OnInit {
     (
       this.el.nativeElement.children[0] as HTMLElement
     ).style.transform = `rotate(${(clamped / 100) * this.MAX_ANGLE}deg)`;
+
+    // brushed surface
     (
       this.el.nativeElement.children[2] as HTMLElement
+    ).style.transform = `rotate(${(clamped / 100) * this.MAX_ANGLE}deg)`;
+
+    // control arrow
+    (
+      this.el.nativeElement.children[4] as HTMLElement
     ).style.transform = `rotate(${(clamped / 100) * this.MAX_ANGLE}deg)`;
     this.percent = clamped;
     this.change.emit(clamped);

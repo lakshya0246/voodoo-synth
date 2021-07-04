@@ -21,13 +21,25 @@
         position: absolute;
         transform-origin: center;
     }
-    & > img:nth-child(2) {
+    & > .brushed {
         display: block;
         height: calc(var(--knob-size) - 12px);
         width: calc(var(--knob-size) - 12px);
         position: absolute;
         border-radius: 50%;
-        box-shadow: 0px 0.5px 1px 1px rgba(0, 0, 0, 0.2);
+
+        &.shadow {
+            transform: rotate(0deg);
+            box-shadow: 0px 0.5px 1px 1px rgba(0, 0, 0, 0.2);
+        }
+        &.base {
+            transform: rotate(0deg);
+        }
+
+        &.filter {
+            transform: rotate(0deg);
+            mix-blend-mode: screen;
+        }
     }
 
     .control-arrow {
