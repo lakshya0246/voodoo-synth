@@ -1,1 +1,25 @@
 <vd-synth></vd-synth>
+
+<footer>
+    <p class="credits">
+
+        <span>Created by <a href="https://lakshya.dev">Lakshya</a>
+        </span>
+        <span class="spacer">|</span>
+        <span class="credits"> Samples credits
+            <a href="https://freesound.org/people/KlangRaumWort/sounds/574377/">1</a>
+            <a href="https://freesound.org/people/KlangRaumWort/sounds/574070/">2</a>
+            <a href="https://freesound.org/people/KlangRaumWort/sounds/533288/">3</a>
+        </span>
+        <span class="spacer">|</span>
+        <span (click)='showTroubleshooting = !showTroubleshooting' class="troubleshooting"> Audio broken?</span>
+    </p>
+</footer>
+<div *ngIf="showTroubleshooting" (click)="showTroubleshooting = false" class="blanket"></div>
+<div class="troubleshooting-modal" *ngIf="showTroubleshooting">
+    <h3>Known issues</h3>
+    <ul>
+        <li>If you're using wireless output device, you might experience lag.</li>
+        <li>Firefox has an issue with gain interpolation that might cause broken audio.</li>
+    </ul>
+</div>
