@@ -1,3 +1,4 @@
+<button (click)="showKeymap = true" class='keymap-trigger-btn'>Keymap</button>
 <vd-synth></vd-synth>
 
 <footer>
@@ -15,8 +16,15 @@
         <span (click)='showTroubleshooting = !showTroubleshooting' class="troubleshooting"> Audio broken?</span>
     </p>
 </footer>
-<div *ngIf="showTroubleshooting" (click)="showTroubleshooting = false" class="blanket"></div>
-<div class="troubleshooting-modal" *ngIf="showTroubleshooting">
+<div *ngIf="showTroubleshooting || showKeymap" (click)="showTroubleshooting = false; showKeymap = false"
+    class="blanket"></div>
+
+<div class="modal keymap" *ngIf="showKeymap">
+    <h3>Key Map</h3>
+    <img height="120" src="../assets/pictures/key_map.svg" alt="Figure of the map of keyboard keys and notes">
+</div>
+
+<div class="modal" *ngIf="showTroubleshooting">
     <h3>Known issues</h3>
     <ul>
         <li>If you're using a wireless output device, you might experience lag.</li>
