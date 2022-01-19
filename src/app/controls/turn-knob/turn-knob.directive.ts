@@ -51,6 +51,7 @@ export class TurnKnobDirective implements OnInit {
       const path = track.children[1] as SVGCircleElement;
 
       // subtract arc from circle
+
       const circumference =
         3.14 * this.radius * 2 - ((3.14 * this.radius * 2) / 360) * 80;
       path.style.strokeDasharray = `${circumference} ${circumference}`;
