@@ -7,7 +7,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { HarmonicOscillator } from './instruments/harmonic-oscillator';
-import { KEY_NOTE_FREQUENCY_MAP } from './notes';
+import { KEY_NOTE_FREQUENCY_MAP, MIDI_KEY_NOTE_FREQUENCY_MAP } from './notes';
 
 @Component({
   selector: 'vd-synth',
@@ -93,6 +93,38 @@ export class SynthComponent implements AfterViewInit {
         );
       });
     }
+
+    const that = this;
+    (navigator as any).requestMIDIAccess().then(function (access: any) {
+      console.log(access);
+      // Get lists of available MIDI controllers
+      const inputs: Map<any, any> = access.inputs.values();
+      const outputs = access.outputs.values();
+      console.log(([...inputs][0] as any).name + ' connected');
+      access.inputs.forEach(function (entry: any) {
+        entry.onmidimessage = (event: any) => {
+          const [status, key, velocity] = event.data as number[];
+          // Ref: https://computermusicresource.com/MIDI.Commands.html
+          if (status > 143 && status < 160) {
+            that.onPress(
+              new KeyboardEvent('press', { key: key.toString() }),
+              true
+            );
+          } else if (status < 144 && status > 127) {
+            that.onUp(
+              new KeyboardEvent('press', { key: key.toString() }),
+              true
+            );
+          }
+          console.log(status, key, velocity);
+        };
+      });
+
+      access.onstatechange = function (e: any) {
+        // Print information about the (dis)connected MIDI controller
+        console.log(e.port.name, e.port.manufacturer, e.port.state);
+      };
+    });
   }
 
   toggleSample(checked: boolean, index: number) {
@@ -155,16 +187,20 @@ export class SynthComponent implements AfterViewInit {
   }
 
   @HostListener('document:keydown', ['$event'])
-  onPress(event: KeyboardEvent) {
-    const keyNoteFrequency = KEY_NOTE_FREQUENCY_MAP[event.key];
-
+  onPress(event: KeyboardEvent, isMidi: boolean = false) {
+    const keyNoteFrequency = isMidi
+      ? MIDI_KEY_NOTE_FREQUENCY_MAP[event.key]
+      : KEY_NOTE_FREQUENCY_MAP[event.key];
+    console.log(event.key, keyNoteFrequency);
     if (keyNoteFrequency && !this.playing[keyNoteFrequency]) {
       this.playing[keyNoteFrequency] = this.playNote(keyNoteFrequency);
     }
   }
   @HostListener('document:keyup', ['$event'])
-  onUp(event: KeyboardEvent) {
-    const keyNoteFrequency = KEY_NOTE_FREQUENCY_MAP[event.key];
+  onUp(event: KeyboardEvent, isMidi: boolean = false) {
+    const keyNoteFrequency = isMidi
+      ? MIDI_KEY_NOTE_FREQUENCY_MAP[event.key]
+      : KEY_NOTE_FREQUENCY_MAP[event.key];
     const playingVoice = this.playing[keyNoteFrequency];
 
     if (playingVoice) {
