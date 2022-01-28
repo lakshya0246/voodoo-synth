@@ -7,7 +7,11 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { HarmonicOscillator } from './instruments/harmonic-oscillator';
-import { KEY_NOTE_FREQUENCY_MAP, MIDI_KEY_NOTE_FREQUENCY_MAP } from './notes';
+import { getMidiNote } from './notes';
+import {
+  KEY_NOTE_FREQUENCY_MAP,
+  MIDI_KEY_NOTE_FREQUENCY_MAP,
+} from './notes/notes';
 
 @Component({
   selector: 'vd-synth',
@@ -96,7 +100,6 @@ export class SynthComponent implements AfterViewInit {
 
     const that = this;
     (navigator as any).requestMIDIAccess().then(function (access: any) {
-      console.log(access);
       // Get lists of available MIDI controllers
       const inputs: Map<any, any> = access.inputs.values();
       const outputs = access.outputs.values();
@@ -116,7 +119,6 @@ export class SynthComponent implements AfterViewInit {
               true
             );
           }
-          console.log(status, key, velocity);
         };
       });
 
@@ -189,7 +191,7 @@ export class SynthComponent implements AfterViewInit {
   @HostListener('document:keydown', ['$event'])
   onPress(event: KeyboardEvent, isMidi: boolean = false) {
     const keyNoteFrequency = isMidi
-      ? MIDI_KEY_NOTE_FREQUENCY_MAP[event.key]
+      ? getMidiNote(event.key)
       : KEY_NOTE_FREQUENCY_MAP[event.key];
     console.log(event.key, keyNoteFrequency);
     if (keyNoteFrequency && !this.playing[keyNoteFrequency]) {
@@ -199,7 +201,7 @@ export class SynthComponent implements AfterViewInit {
   @HostListener('document:keyup', ['$event'])
   onUp(event: KeyboardEvent, isMidi: boolean = false) {
     const keyNoteFrequency = isMidi
-      ? MIDI_KEY_NOTE_FREQUENCY_MAP[event.key]
+      ? getMidiNote(event.key)
       : KEY_NOTE_FREQUENCY_MAP[event.key];
     const playingVoice = this.playing[keyNoteFrequency];
 

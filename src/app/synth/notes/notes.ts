@@ -159,25 +159,22 @@ export const KEY_NOTE_FREQUENCY_MAP: { [key: string]: number } = {
   u: NOTE_VALUES['A#4'],
 };
 
-// not real mapping
+/**
+ * Base keys
+ */
 export const MIDI_KEY_NOTE_FREQUENCY_MAP: Record<string, number> = {
-  // if 36 - current key === - 7 return C4/2
-  // if 36 - current key === 7 return C4 * 2
-  // if 36 - current key === 14 return C4 * 4
-  // something like this
-  // if 38 - current key === 7 return s
-  36: NOTE_VALUES.C4,
-  38: NOTE_VALUES.D4,
-  40: NOTE_VALUES.E4,
-  41: NOTE_VALUES.F4,
-  43: NOTE_VALUES.G4,
-  45: NOTE_VALUES.A4,
-  47: NOTE_VALUES.B4,
+  60: NOTE_VALUES.C4,
+  62: NOTE_VALUES.D4,
+  64: NOTE_VALUES.E4,
+  65: NOTE_VALUES.F4,
+  67: NOTE_VALUES.G4,
+  69: NOTE_VALUES.A4,
+  71: NOTE_VALUES.B4,
 
-  37: NOTE_VALUES['C#4'],
-  39: NOTE_VALUES['D#4'],
+  61: NOTE_VALUES['C#4'],
+  63: NOTE_VALUES['D#4'],
 
-  42: NOTE_VALUES['F#4'],
-  44: NOTE_VALUES['G#4'],
-  46: NOTE_VALUES['A#4'],
+  66: NOTE_VALUES['F#4'],
+  68: NOTE_VALUES['G#4'],
+  70: NOTE_VALUES['A#4'],
 };
