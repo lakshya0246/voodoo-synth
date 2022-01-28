@@ -103,7 +103,6 @@ export class SynthComponent implements AfterViewInit {
       // Get lists of available MIDI controllers
       const inputs: Map<any, any> = access.inputs.values();
       const outputs = access.outputs.values();
-      console.log(([...inputs][0] as any).name + ' connected');
       access.inputs.forEach(function (entry: any) {
         entry.onmidimessage = (event: any) => {
           const [status, key, velocity] = event.data as number[];
@@ -124,7 +123,6 @@ export class SynthComponent implements AfterViewInit {
 
       access.onstatechange = function (e: any) {
         // Print information about the (dis)connected MIDI controller
-        console.log(e.port.name, e.port.manufacturer, e.port.state);
       };
     });
   }
@@ -193,7 +191,6 @@ export class SynthComponent implements AfterViewInit {
     const keyNoteFrequency = isMidi
       ? getMidiNote(event.key)
       : KEY_NOTE_FREQUENCY_MAP[event.key];
-    console.log(event.key, keyNoteFrequency);
     if (keyNoteFrequency && !this.playing[keyNoteFrequency]) {
       this.playing[keyNoteFrequency] = this.playNote(keyNoteFrequency);
     }
